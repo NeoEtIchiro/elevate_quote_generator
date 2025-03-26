@@ -11,7 +11,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _isDarkMode = false;
-  String _selectedLanguage = "en";
+  String _selectedLanguage = "";
 
   @override
   void didChangeDependencies() {

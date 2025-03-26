@@ -24,15 +24,22 @@ class _QuoteCardState extends State<QuoteCard> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                widget.quote,
-                style: const TextStyle(fontSize: 24.0),
+              Expanded(
+                child: Text(
+                  "'''\n${widget.quote}\n'''",
+                  style: const TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                ),
               ),
-              const SizedBox(height: 8.0),
-              Text(
-                widget.author,
-                style: const TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                    "- ${widget.author}",
+                  style: const TextStyle(fontSize: 24.0, fontStyle: FontStyle.italic),
+                  textAlign: TextAlign.left,
+                ),
               ),
             ],
           ),

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:io';
 import 'package:elevate_quote_generator/widgets/quote_card.dart';
 import 'package:elevate_quote_generator/widgets/action_row.dart';
+import 'package:elevate_quote_generator/views/settings.dart';
+import 'package:elevate_quote_generator/widgets/custom_app_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -13,10 +17,34 @@ class _MainScreenState extends State<MainScreen> {
   String quote = 'This is a quote.';
   String author = '- Author';
 
+  @override
+  void initState() {
+    super.initState();
+    generateQuote();
+  }
+
+  Future<void> generateQuote() async {
+    final httpClient = HttpClient()
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+
+    final request = await httpClient.getUrl(Uri.parse('https://api.quotable.io/random?maxLength=130'));
+    final response = await request.close();
+
+    if (response.statusCode == 200) {
+      final responseBody = await response.transform(utf8.decoder).join();
+      final data = json.decode(responseBody);
+      setState(() {
+        quote = data['content'];
+        author = data['author'];
+      });
+    } else {
+      throw Exception('Failed to load quote');
+    }
+  }
+
   void _dislikeAction() {
     setState(() {
-      quote = 'Quote disliked';
-      author = '';
+      generateQuote();
     });
   }
 
@@ -29,22 +57,36 @@ class _MainScreenState extends State<MainScreen> {
 
   void _likeAction() {
     setState(() {
-      quote = 'Like quote';
-      author = '- Favorite';
+      generateQuote();
     });
+  }
+
+  void _openSettings() {
+    // Navigate to the settings page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SettingsScreen()),
+    );
+  }
+
+  void _onMenuItemSelected(String value) {
+    // Handle menu item selection
+    switch (value) {
+      case 'a_propos':
+      // Action for item 1
+        break;
+      case 'info':
+      // Action for item 2
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Elevate',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+      appBar: CustomAppBar(
+        onSettingsPressed: _openSettings,
+        onMenuItemSelected: _onMenuItemSelected,
       ),
       body: Padding(
         padding: const EdgeInsets.all(32.0),

@@ -1,3 +1,4 @@
+import 'package:elevate_quote_generator/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -65,7 +66,14 @@ class _MainScreenState extends State<MainScreen> {
     // Navigate to the settings page
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const SettingsScreen()),
+      MaterialPageRoute(
+        builder: (context) => SettingsScreen(
+          isDarkMode: MainApp.of(context)?.isDarkMode ?? false,
+          toggleDarkMode: MainApp.of(context)?.toggleDarkMode ?? (value) {},
+          locale: MainApp.of(context)?.locale,
+          setLocale: MainApp.of(context)?.setLocale ?? (locale) {},
+        ),
+      ),
     );
   }
 

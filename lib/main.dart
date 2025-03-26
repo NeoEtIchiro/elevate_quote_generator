@@ -18,10 +18,20 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   Locale? _locale;
+  get locale => _locale;
+  bool _isDarkMode = false;
+  get isDarkMode => _isDarkMode;
+
 
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
+    });
+  }
+
+  void toggleDarkMode(bool value) {
+    setState(() {
+      _isDarkMode = value;
     });
   }
 
@@ -31,13 +41,12 @@ class _MainAppState extends State<MainApp> {
       title: 'Elevate Quote Generator',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        brightness: Brightness.light,
+        brightness: _isDarkMode ? Brightness.dark : Brightness.light,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
       ),
-      locale: _locale ?? Locale('en'),
+      locale: _locale ?? const Locale('en'),
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       home: const MainScreen(),

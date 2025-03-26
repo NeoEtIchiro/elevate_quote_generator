@@ -3,39 +3,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+  final bool isDarkMode;
+  final void Function(bool) toggleDarkMode;
+  final Locale? locale;
+  final void Function(Locale) setLocale;
+
+  const SettingsScreen({
+    super.key,
+    required this.isDarkMode,
+    required this.toggleDarkMode,
+    required this.locale,
+    required this.setLocale,
+  });
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _isDarkMode = false;
-  String _selectedLanguage = "";
+  late bool _isDarkMode;
+  late String _selectedLanguage;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Access Theme.of(context) here instead of initState
-    final theme = Theme.of(context);
-    _isDarkMode = theme.brightness == Brightness.dark;
+  void initState() {
+    super.initState();
+    _isDarkMode = widget.isDarkMode;
+    _selectedLanguage = widget.locale?.languageCode ?? 'en';
   }
 
   void _toggleDarkMode(bool value) {
     setState(() {
       _isDarkMode = value;
     });
+    widget.toggleDarkMode(value); // Update global state
   }
 
   void _changeLanguage(String? value) {
-    setState(() {
-      if (value != null && AppLocalizations.supportedLocales
-          .any((locale) => locale.languageCode == value)) {
+    if (value != null) {
+      setState(() {
         _selectedLanguage = value;
-        Locale newLocale = Locale(value);
-        MainApp.of(context)?.setLocale(newLocale);
-      }
-    });
+      });
+      widget.setLocale(Locale(value)); // Update global state
+    }
   }
 
   @override

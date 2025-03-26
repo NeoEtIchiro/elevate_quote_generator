@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:elevate_quote_generator/widgets/quote_card.dart';
 import 'package:elevate_quote_generator/widgets/action_row.dart';
 import 'package:elevate_quote_generator/views/settings.dart';
+import 'package:elevate_quote_generator/widgets/custom_app_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -58,35 +59,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Elevate',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: _openSettings,
-          ),
-          PopupMenuButton<String>(
-            onSelected: _onMenuItemSelected,
-            itemBuilder: (BuildContext context) {
-              return [
-                const PopupMenuItem<String>(
-                  value: 'a_propos',
-                  child: Text('A propos'),
-                ),
-                const PopupMenuItem<String>(
-                  value: 'info',
-                  child: Text('Info'),
-                ),
-              ];
-            },
-          ),
-        ],
+      appBar: CustomAppBar(
+        onSettingsPressed: _openSettings,
+        onMenuItemSelected: _onMenuItemSelected,
       ),
       body: Padding(
         padding: const EdgeInsets.all(32.0),

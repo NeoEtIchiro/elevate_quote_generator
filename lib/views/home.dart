@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
     final httpClient = HttpClient()
       ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
 
-    final request = await httpClient.getUrl(Uri.parse('https://api.quotable.io/random'));
+    final request = await httpClient.getUrl(Uri.parse('https://api.quotable.io/random?maxLength=130'));
     final response = await request.close();
 
     if (response.statusCode == 200) {

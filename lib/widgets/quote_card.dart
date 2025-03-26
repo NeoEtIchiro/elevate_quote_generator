@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class QuoteCard extends StatefulWidget {
-  const QuoteCard({super.key});
+  final String quote;
+  final String author;
+
+  const QuoteCard({
+    super.key,
+    required this.quote,
+    required this.author,
+  });
 
   @override
   _QuoteCardState createState() => _QuoteCardState();
@@ -17,15 +24,15 @@ class _QuoteCardState extends State<QuoteCard> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const <Widget>[
+            children: <Widget>[
               Text(
-                'This is a quote.',
-                style: TextStyle(fontSize: 24.0),
+                widget.quote,
+                style: const TextStyle(fontSize: 24.0),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               Text(
-                '- Author',
-                style: TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic),
+                widget.author,
+                style: const TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic),
               ),
             ],
           ),

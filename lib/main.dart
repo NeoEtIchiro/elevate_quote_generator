@@ -1,7 +1,6 @@
+import 'package:elevate_quote_generator/views/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'views/settings.dart';
 
 void main() {
   runApp(const MainApp());
@@ -41,7 +40,7 @@ class _MainAppState extends State<MainApp> {
       locale: _locale ?? Locale('en'),
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      home: const SettingsScreen(),
+      home: const MainScreen(),
     );
   }
 }

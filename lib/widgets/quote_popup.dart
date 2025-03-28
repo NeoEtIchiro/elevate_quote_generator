@@ -49,43 +49,37 @@ class _QuotePopupState extends State<QuotePopup> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
 
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                widget.quoteId == null
-                    ? localizations!.addQuoteTitle
-                    : localizations!.editQuoteTitle,
-                style: TextStyle(
-                  fontSize: 24.0, // Increase the font size
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              TextField(
-                controller: _contentController,
-                decoration: InputDecoration(labelText: localizations.quote),
-              ),
-              TextField(
-                controller: _authorController,
-                decoration: InputDecoration(labelText: localizations.author),
-              ),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: _addOrUpdateQuote,
-                child: Text(localizations.saveQuote),
-              ),
-            ],
-          ),
+    return AlertDialog(
+      title: Text(
+        widget.quoteId == null
+            ? localizations!.addQuoteTitle
+            : localizations!.editQuoteTitle,
+        style: TextStyle(
+          fontSize: 24.0, // Increase the font size
+          fontWeight: FontWeight.bold,
         ),
       ),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _contentController,
+              decoration: InputDecoration(labelText: localizations.quote),
+            ),
+            TextField(
+              controller: _authorController,
+              decoration: InputDecoration(labelText: localizations.author),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: _addOrUpdateQuote,
+          child: Text(localizations.saveQuote),
+        ),
+      ],
     );
   }
 }

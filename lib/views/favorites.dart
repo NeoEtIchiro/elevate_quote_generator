@@ -35,7 +35,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   }
 
   void _openAddQuotePopup({int? id, String? content, String? author}) {
-    showModalBottomSheet(
+    showDialog(
       context: context,
       builder: (context) => QuotePopup(
         onQuoteAdded: _fetchQuotes,

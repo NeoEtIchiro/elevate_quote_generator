@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:elevate_quote_generator/widgets/quote_card.dart';
 import 'package:elevate_quote_generator/widgets/action_row.dart';
 import 'package:elevate_quote_generator/views/settings.dart';
+import 'package:elevate_quote_generator/views/favorites.dart';
 import 'package:elevate_quote_generator/widgets/custom_app_bar.dart';
 
 class MainScreen extends StatefulWidget {
@@ -72,6 +73,19 @@ class _MainScreenState extends State<MainScreen> {
           toggleDarkMode: MainApp.of(context)?.toggleDarkMode ?? (value) {},
           locale: MainApp.of(context)?.locale,
           setLocale: MainApp.of(context)?.setLocale ?? (locale) {},
+        ),
+      ),
+    );
+  }
+
+  void _openFavorites() {
+    // Navigate to the favorites page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FavoritesScreen(
+          isDarkMode: MainApp.of(context)?.isDarkMode ?? false,
+          locale: MainApp.of(context)?.locale,
         ),
       ),
     );

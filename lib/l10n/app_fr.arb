@@ -12,5 +12,10 @@
   "version": "Version 1.0.0",
   "description": "Cette application génère des citations inspirantes pour vous motiver. Développée avec Flutter, elle utilise une API pour récupérer des citations aléatoires.",
   "developers": "Développeurs : BOUGIO Néo et ESTHER Paqui",
-  "license": "Licence MIT"
+  "license": "Licence MIT",
+  "infoStudiesTitle": "Voici quelques études et articles qui explorent les bienfaits des citations inspirantes :",
+  "infoStudy1": "1. La science derrière les citations motivantes - Positive Psychology",
+  "infoStudy2": "2. 40 citations inspirantes pour vous motiver - Psychology Today",
+  "infoStudy3": "3. Le rôle des affirmations positives dans la santé mentale - NCBI",
+  "infoConclusion": "En lisant des citations inspirantes régulièrement, vous pouvez cultiver une attitude positive et améliorer votre résilience face aux défis."
 }

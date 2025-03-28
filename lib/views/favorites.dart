@@ -87,9 +87,21 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _openAddQuotePopup(),
-        child: const Icon(Icons.add),
+      floatingActionButton: SizedBox(
+        width: 80.0, // Custom size for the button
+        height: 80.0, // Custom size for the button
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: const CircleBorder(),
+            padding: const EdgeInsets.all(10.0),// Set the background color
+          ),
+          onPressed: () => _openAddQuotePopup(),
+          child: const Icon(
+            Icons.add,
+            size: 44.0, // Increase the icon size
+            color: Colors.black, // Set the icon color to white
+          ),
+        ),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:elevate_quote_generator/widgets/action_row.dart';
 import 'package:elevate_quote_generator/views/settings.dart';
 import 'package:elevate_quote_generator/views/favorites.dart';
 import 'package:elevate_quote_generator/widgets/custom_app_bar.dart';
+import 'package:elevate_quote_generator/services/data.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -56,7 +57,8 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  void _likeAction() {
+  void _likeAction() async {
+    await DatabaseHelper.instance.addQuote(quote, author);
     setState(() {
       generateQuote();
     });

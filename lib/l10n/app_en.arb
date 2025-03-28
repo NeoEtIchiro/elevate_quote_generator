@@ -1,6 +1,7 @@
 {
   "settings": "Settings",
   "favorites": "Favorites",
+  "noFavorites": "No favorites",
   "language": "Language",
   "darkMode": "Dark Mode",
   "french": "French",

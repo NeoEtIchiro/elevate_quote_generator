@@ -9,7 +9,7 @@ import 'package:elevate_quote_generator/views/favorites.dart';
 import 'package:elevate_quote_generator/widgets/custom_app_bar.dart';
 import 'package:elevate_quote_generator/services/data.dart';
 import 'package:elevate_quote_generator/services/apis/quotes.dart';
-
+import 'package:elevate_quote_generator/services/apis/translate.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -22,6 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   String quote = 'This is a quote.';
   String author = '- Author';
   final QuotesService _quotesService = QuotesService();
+  final TranslateService _translateService = TranslateService();
 
   @override
   void initState() {
@@ -31,10 +32,25 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> generateQuote() async {
     final newQuote = await _quotesService.generateQuote();
-    setState(() {
-      quote = newQuote['content']!;
-      author = newQuote['author']!;
-    });
+    if (MainApp.of(context)?.locale?.languageCode == 'fr') {
+      try {
+        final translatedContent = await _translateService.translateToFrench(newQuote['content']!);
+        setState(() {
+          quote = translatedContent;
+          author = newQuote['author']!;
+        });
+      } catch (e) {
+        setState(() {
+          quote = 'Failed to translate quote';
+          author = newQuote['author']!;
+        });
+      }
+    } else {
+      setState(() {
+        quote = newQuote['content']!;
+        author = newQuote['author']!;
+      });
+    }
   }
 
   void _dislikeAction() {
@@ -57,7 +73,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _openSettings() {
-    // Navigate to the settings page
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -72,7 +87,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _openFavorites() {
-    // Navigate to the favorites page
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -85,7 +99,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onMenuItemSelected(String value) {
-    // Handle menu item selection
     switch (value) {
       case 'a_propos':
         Navigator.push(

@@ -3,21 +3,27 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onSettingsPressed;
   final ValueChanged<String> onMenuItemSelected;
+  final String title;
+  final TextStyle style;
 
   const CustomAppBar({
     super.key,
     required this.onSettingsPressed,
     required this.onMenuItemSelected,
+    required this.title,
+    required this.style
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text(
-        'Elevate',
+      title: Text(
+        title,
         style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white
+              : Colors.black,
+        ).merge(style
         ),
       ),
       actions: [

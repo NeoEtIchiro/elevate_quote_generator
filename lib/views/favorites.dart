@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FavoritesScreen extends StatefulWidget {
   final bool isDarkMode;
@@ -18,7 +19,10 @@ class FavoritesScreen extends StatefulWidget {
 class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
-    return Card();
-  }
+    final localizations = AppLocalizations.of(context);
 
+    return Scaffold(
+        appBar: AppBar(title: Text(localizations!.favorites))
+    );
+  }
 }

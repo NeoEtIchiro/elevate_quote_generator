@@ -52,8 +52,7 @@ class _MainScreenState extends State<MainScreen> {
 
   void _favoriteAction() {
     setState(() {
-      quote = 'Favorite page';
-      author = '- Star';
+      _openFavorites();
     });
   }
 

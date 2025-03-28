@@ -2,14 +2,14 @@ import 'package:elevate_quote_generator/main.dart';
 import 'package:elevate_quote_generator/views/about.dart';
 import 'package:elevate_quote_generator/views/info.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'dart:io';
 import 'package:elevate_quote_generator/widgets/quote_card.dart';
 import 'package:elevate_quote_generator/widgets/action_row.dart';
 import 'package:elevate_quote_generator/views/settings.dart';
 import 'package:elevate_quote_generator/views/favorites.dart';
 import 'package:elevate_quote_generator/widgets/custom_app_bar.dart';
 import 'package:elevate_quote_generator/services/data.dart';
+import 'package:elevate_quote_generator/services/apis/quotes.dart';
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -21,6 +21,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   String quote = 'This is a quote.';
   String author = '- Author';
+  final QuotesService _quotesService = QuotesService();
 
   @override
   void initState() {
@@ -29,22 +30,11 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> generateQuote() async {
-    final httpClient = HttpClient()
-      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-
-    final request = await httpClient.getUrl(Uri.parse('https://api.quotable.io/random?maxLength=130'));
-    final response = await request.close();
-
-    if (response.statusCode == 200) {
-      final responseBody = await response.transform(utf8.decoder).join();
-      final data = json.decode(responseBody);
-      setState(() {
-        quote = data['content'];
-        author = data['author'];
-      });
-    } else {
-      throw Exception('Failed to load quote');
-    }
+    final newQuote = await _quotesService.generateQuote();
+    setState(() {
+      quote = newQuote['content']!;
+      author = newQuote['author']!;
+    });
   }
 
   void _dislikeAction() {

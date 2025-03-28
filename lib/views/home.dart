@@ -1,4 +1,5 @@
 import 'package:elevate_quote_generator/main.dart';
+import 'package:elevate_quote_generator/views/about.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -96,7 +97,12 @@ class _MainScreenState extends State<MainScreen> {
     // Handle menu item selection
     switch (value) {
       case 'a_propos':
-      // Action for item 1
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const AboutScreen(),
+          ),
+        );
         break;
       case 'info':
       // Action for item 2

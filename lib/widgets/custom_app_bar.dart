@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onSettingsPressed;
@@ -16,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return AppBar(
       title: Text(
         title,
@@ -35,13 +38,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           onSelected: onMenuItemSelected,
           itemBuilder: (BuildContext context) {
             return [
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'a_propos',
-                child: Text('A propos'),
+                child: Text(localizations!.aboutTitle),
               ),
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'info',
-                child: Text('Info'),
+                child: Text(localizations.info),
               ),
             ];
           },

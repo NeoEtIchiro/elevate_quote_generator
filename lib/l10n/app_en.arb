@@ -5,5 +5,12 @@
   "language": "Language",
   "darkMode": "Dark Mode",
   "french": "French",
-  "english": "English"
+  "english": "English",
+  "aboutTitle": "About",
+  "info": "Info",
+  "appName": "Elevate Quote Generator",
+  "version": "Version 1.0.0",
+  "description": "This app generates inspiring quotes to motivate you. Developed with Flutter, it uses an API to fetch random quotes.",
+  "developers": "Developers: BOUGIO Néo and ESTHER Paqui",
+  "license": "MIT License"
 }

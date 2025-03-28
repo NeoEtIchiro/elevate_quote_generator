@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 class TranslateService {
-  final String apiKey = 'YOUR_DEEPL_API_KEY_HERE'; // Replace with your actual DeepL API key
+  final String apiKey = 'b24d214c-036a-4ed3-bcd0-968daa3b9115:fx'; // Replace with your actual DeepL API key
 
   Future<String> translateToFrench(String text) async {
     final httpClient = HttpClient()

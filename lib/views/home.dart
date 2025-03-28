@@ -1,8 +1,6 @@
 import 'package:elevate_quote_generator/main.dart';
 import 'package:elevate_quote_generator/views/about.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'dart:io';
 import 'package:elevate_quote_generator/widgets/quote_card.dart';
 import 'package:elevate_quote_generator/widgets/action_row.dart';
 import 'package:elevate_quote_generator/views/settings.dart';

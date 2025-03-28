@@ -17,5 +17,11 @@
   "infoStudy1": "1. The Science Behind Motivational Quotes - Positive Psychology",
   "infoStudy2": "2. 40 Inspirational Quotes to Motivate You - Psychology Today",
   "infoStudy3": "3. The Role of Positive Affirmations in Mental Health - NCBI",
-  "infoConclusion": "By regularly reading inspirational quotes, you can cultivate a positive attitude and improve your resilience in the face of challenges."
+  "infoConclusion": "By regularly reading inspirational quotes, you can cultivate a positive attitude and improve your resilience in the face of challenges.",
+
+  "addQuoteTitle": "Add Quote",
+  "editQuoteTitle": "Edit Quote",
+  "quote": "Quote",
+  "author": "Author",
+  "saveQuote": "Save Quote"
 }

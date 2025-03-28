@@ -45,9 +45,25 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         itemCount: _quotes.length,
         itemBuilder: (context, index) {
           final quote = _quotes[index];
-          return ListTile(
-            title: Text(quote['content']),
-            subtitle: Text(quote['author']),
+          return Card(
+            margin: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 16.0, left: 8.0, right: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    quote['content'],
+                    style: const TextStyle(fontSize: 18.0),
+                  ),
+                  const SizedBox(height: 8.0),
+                  Text(
+                    "- ${quote['author']}",
+                    style: const TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic),
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ),

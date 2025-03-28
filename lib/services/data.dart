@@ -39,6 +39,22 @@ class DatabaseHelper {
     return await db!.insert('quotes', data);
   }
 
+  Future<int> updateQuote(int id, String content, String author) async {
+    final db = await instance.database;
+
+    final data = {
+      'content': content,
+      'author': author,
+    };
+
+    return await db!.update(
+      'quotes',
+      data,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<int> deleteQuote(int id) async {
     final db = await instance.database;
 

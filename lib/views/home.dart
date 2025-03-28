@@ -95,6 +95,8 @@ class _MainScreenState extends State<MainScreen> {
       appBar: CustomAppBar(
         onSettingsPressed: _openSettings,
         onMenuItemSelected: _onMenuItemSelected,
+        title: 'Elevate',
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
       body: Padding(
         padding: const EdgeInsets.all(32.0),

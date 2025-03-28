@@ -17,7 +17,7 @@ class QuoteCard extends StatefulWidget {
 class _QuoteCardState extends State<QuoteCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Card(
         child: Padding(

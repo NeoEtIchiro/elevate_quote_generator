@@ -17,5 +17,11 @@
   "infoStudy1": "1. La science derrière les citations motivantes - Positive Psychology",
   "infoStudy2": "2. 40 citations inspirantes pour vous motiver - Psychology Today",
   "infoStudy3": "3. Le rôle des affirmations positives dans la santé mentale - NCBI",
-  "infoConclusion": "En lisant des citations inspirantes régulièrement, vous pouvez cultiver une attitude positive et améliorer votre résilience face aux défis."
+  "infoConclusion": "En lisant des citations inspirantes régulièrement, vous pouvez cultiver une attitude positive et améliorer votre résilience face aux défis.",
+
+  "addQuoteTitle": "Ajouter une citation",
+  "editQuoteTitle": "Modifier une citation",
+  "quote": "Citation",
+  "author": "Auteur",
+  "saveQuote": "Enregistrer la citation"
 }

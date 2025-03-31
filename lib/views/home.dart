@@ -9,7 +9,6 @@ import 'package:elevate_quote_generator/views/favorites.dart';
 import 'package:elevate_quote_generator/widgets/custom_app_bar.dart';
 import 'package:elevate_quote_generator/services/data.dart';
 import 'package:elevate_quote_generator/services/apis/quotes.dart';
-import 'package:elevate_quote_generator/services/apis/translate.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -19,10 +18,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  String quote = 'This is a quote.';
-  String author = '- Author';
+  String quote = '';
+  String quote_Fr = '';
+  String quote_En= '';
+  String author = '';
   final QuotesService _quotesService = QuotesService();
-  final TranslateService _translateService = TranslateService();
 
   @override
   void initState() {
@@ -32,23 +32,18 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> generateQuote() async {
     final newQuote = await _quotesService.generateQuote();
+    setState(() {
+      quote_En = newQuote['content_en']!;
+      quote_Fr = newQuote['content_fr']!;
+      author = newQuote['author']!;
+    });
     if (MainApp.of(context)?.locale?.languageCode == 'fr') {
-      try {
-        final translatedContent = await _translateService.translateToFrench(newQuote['content']!);
         setState(() {
-          quote = translatedContent;
-          author = newQuote['author']!;
+          quote = quote_Fr;
         });
-      } catch (e) {
-        setState(() {
-          quote = 'Failed to translate quote';
-          author = newQuote['author']!;
-        });
-      }
     } else {
       setState(() {
-        quote = newQuote['content']!;
-        author = newQuote['author']!;
+        quote = quote_En;
       });
     }
   }
@@ -66,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _likeAction() async {
-    await DatabaseHelper.instance.addQuote(quote, author);
+    await DatabaseHelper.instance.addQuote(quote_Fr, quote_En, author);
     setState(() {
       generateQuote();
     });

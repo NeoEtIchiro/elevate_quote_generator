@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:elevate_quote_generator/services/apis/translate.dart';
+
 class QuotesService {
   Future<Map<String, String>> generateQuote() async {
     final httpClient = HttpClient()
@@ -13,7 +15,8 @@ class QuotesService {
       final responseBody = await response.transform(utf8.decoder).join();
       final data = json.decode(responseBody);
       return {
-        'content': data['content'],
+        'content_en': data['content'],
+        'content_fr': await TranslateService().translateToFrench(data['content']),
         'author': data['author'],
       };
     } else {

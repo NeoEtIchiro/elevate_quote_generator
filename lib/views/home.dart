@@ -44,10 +44,6 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  void _updateQuote() {
-    setState(() {});
-  }
-
   void _dislikeAction() {
     _quotesQueue.removeFirst();
     _loadNewQuote();

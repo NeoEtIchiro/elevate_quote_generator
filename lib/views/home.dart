@@ -9,6 +9,7 @@ import 'package:elevate_quote_generator/views/favorites.dart';
 import 'package:elevate_quote_generator/widgets/custom_app_bar.dart';
 import 'package:elevate_quote_generator/services/data.dart';
 import 'package:elevate_quote_generator/services/apis/quotes.dart';
+import 'dart:collection';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -18,53 +19,50 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  String quote = '';
-  String quote_Fr = '';
-  String quote_En= '';
-  String author = '';
+  final Queue<Map<String, String>> _quotesQueue = Queue();
   final QuotesService _quotesService = QuotesService();
 
   @override
   void initState() {
     super.initState();
-    generateQuote();
+    _loadInitialQuotes();
   }
 
-  Future<void> generateQuote() async {
-    final newQuote = await _quotesService.generateQuote();
-    setState(() {
-      quote_En = newQuote['content_en']!;
-      quote_Fr = newQuote['content_fr']!;
-      author = newQuote['author']!;
-    });
-    if (MainApp.of(context)?.locale?.languageCode == 'fr') {
-        setState(() {
-          quote = quote_Fr;
-        });
-    } else {
-      setState(() {
-        quote = quote_En;
-      });
+  Future<void> _loadInitialQuotes() async {
+    for (int i = 0; i < 5; i++) {
+      await _loadNewQuote();
     }
+    setState(() {});
+  }
+
+  Future<void> _loadNewQuote() async {
+    final newQuote = await _quotesService.generateQuote();
+    _quotesQueue.add({
+      'content_en': newQuote['content_en']!,
+      'content_fr': newQuote['content_fr']!,
+      'author': newQuote['author']!,
+    });
+  }
+
+  void _updateQuote() {
+    setState(() {});
   }
 
   void _dislikeAction() {
-    setState(() {
-      generateQuote();
-    });
+    _quotesQueue.removeFirst();
+    _loadNewQuote();
+    setState(() {});
   }
 
   void _favoriteAction() {
-    setState(() {
-      _openFavorites();
-    });
+    _openFavorites();
   }
 
   void _likeAction() async {
-    await DatabaseHelper.instance.addQuote(quote_Fr, quote_En, author);
-    setState(() {
-      generateQuote();
-    });
+    final currentQuote = _quotesQueue.removeFirst();
+    await DatabaseHelper.instance.addQuote(currentQuote['content_fr']!, currentQuote['content_en']!, currentQuote['author']!);
+    _loadNewQuote();
+    setState(() {});
   }
 
   void _openSettings() {
@@ -116,6 +114,10 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final currentQuote = _quotesQueue.isNotEmpty ? _quotesQueue.first : {'content_en': '', 'content_fr': '', 'author': ''};
+    final quote = MainApp.of(context)?.locale?.languageCode == 'fr' ? currentQuote['content_fr']! : currentQuote['content_en']!;
+    final author = currentQuote['author']!;
+
     return Scaffold(
       appBar: CustomAppBar(
         onSettingsPressed: _openSettings,

@@ -23,5 +23,7 @@
   "editQuoteTitle": "Edit Quote",
   "quote": "Quote",
   "author": "Author",
-  "saveQuote": "Save Quote"
+  "saveQuote": "Save Quote",
+  "quoteDeleted": "Quote deleted",
+  "quoteAdded": "Quote added"
 }

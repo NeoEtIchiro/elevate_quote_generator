@@ -36,9 +36,9 @@ class _QuotePopupState extends State<QuotePopup> {
 
     if (content.isNotEmpty && author.isNotEmpty) {
       if (widget.quoteId == null) {
-        await DatabaseHelper.instance.addQuote(content, author);
+        await DatabaseHelper.instance.addQuote(content, content, author);
       } else {
-        await DatabaseHelper.instance.updateQuote(widget.quoteId!, content, author);
+        await DatabaseHelper.instance.updateQuote(widget.quoteId!, content, content, author);
       }
       widget.onQuoteAdded(); // Notify the parent widget to refresh the list
       Navigator.pop(context);

@@ -41,7 +41,11 @@ class _QuotePopupState extends State<QuotePopup> {
         await DatabaseHelper.instance.updateQuote(widget.quoteId!, content, content, author);
       }
       widget.onQuoteAdded(); // Notify the parent widget to refresh the list
-      Navigator.pop(context);
+      if (MediaQuery.of(context).orientation != Orientation.landscape) {
+        Navigator.pop(context);
+      }
+      _contentController.clear();
+      _authorController.clear();
     }
   }
 
@@ -54,6 +58,7 @@ class _QuotePopupState extends State<QuotePopup> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
 
     return AlertDialog(
       title: Text(
@@ -81,10 +86,11 @@ class _QuotePopupState extends State<QuotePopup> {
         ),
       ),
       actions: [
-        ElevatedButton(
-          onPressed: _discardChanges,
-          child: Text(localizations.cancel),
-        ),
+        if (!isLandscape) // Affiche le bouton "Cancel" uniquement en mode portrait
+          ElevatedButton(
+            onPressed: _discardChanges,
+            child: Text(localizations.cancel),
+          ),
         ElevatedButton(
           onPressed: _addOrUpdateQuote,
           child: Text(localizations.saveQuote),

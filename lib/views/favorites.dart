@@ -61,22 +61,52 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    final locale = widget.locale ??
-        const Locale('en'); // Provide a default locale
+    final locale = widget.locale ?? const Locale('en'); // Provide a default locale
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
 
     return Scaffold(
       appBar: AppBar(title: Text(localizations!.favorites)),
-      body: _quotes.isEmpty
-          ? Center(child: Text(localizations.noFavorites))
-          : QuoteList(
-        quotes: _quotes,
-        locale: locale,
-        onDelete: _deleteQuote,
-        onEdit: _editQuote,
-      ),
-      floatingActionButton: AddQuoteButton(
-        onPressed: _openAddQuotePopup,
-      ),
+      body: isLandscape
+          ? Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: _quotes.isEmpty
+                      ? Center(child: Text(localizations.noFavorites))
+                      : QuoteList(
+                          quotes: _quotes,
+                          locale: locale,
+                          onDelete: _deleteQuote,
+                          onEdit: _editQuote,
+                        ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: QuotePopup(
+                      onQuoteAdded: _fetchQuotes,
+                      // Pas de bouton "Cancel" en mode paysage
+                      initialContent: null,
+                      initialAuthor: null,
+                      quoteId: null,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : _quotes.isEmpty
+              ? Center(child: Text(localizations.noFavorites))
+              : QuoteList(
+                  quotes: _quotes,
+                  locale: locale,
+                  onDelete: _deleteQuote,
+                  onEdit: _editQuote,
+                ),
+      floatingActionButton: isLandscape
+          ? null // Pas de FloatingActionButton en mode paysage
+          : AddQuoteButton(
+              onPressed: _openAddQuotePopup,
+            ),
     );
   }
 }

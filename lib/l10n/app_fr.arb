@@ -26,5 +26,7 @@
   "saveQuote": "Enregistrer",
   "cancel": "Annuler",
   "quoteDeleted": "Citation supprimée",
-  "quoteAdded": "Citation ajoutée"
+  "quoteAdded": "Citation ajoutée",
+
+  "landscapeModeMessage": "Vous êtes en mode paysage !"
 }

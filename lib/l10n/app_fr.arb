@@ -23,7 +23,8 @@
   "editQuoteTitle": "Modifier une citation",
   "quote": "Citation",
   "author": "Auteur",
-  "saveQuote": "Enregistrer la citation",
+  "saveQuote": "Enregistrer",
+  "cancel": "Annuler",
   "quoteDeleted": "Citation supprimée",
   "quoteAdded": "Citation ajoutée"
 }

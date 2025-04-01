@@ -45,6 +45,12 @@ class _QuotePopupState extends State<QuotePopup> {
     }
   }
 
+  void _discardChanges() {
+    _contentController.clear();
+    _authorController.clear();
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
@@ -75,6 +81,10 @@ class _QuotePopupState extends State<QuotePopup> {
         ),
       ),
       actions: [
+        ElevatedButton(
+          onPressed: _discardChanges,
+          child: Text(localizations.cancel),
+        ),
         ElevatedButton(
           onPressed: _addOrUpdateQuote,
           child: Text(localizations.saveQuote),

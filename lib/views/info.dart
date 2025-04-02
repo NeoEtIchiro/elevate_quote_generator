@@ -15,6 +15,7 @@ class InfoScreen extends StatelessWidget {
     }
   }
 
+  // Cette page affiche des informations sur l'application, y compris le nom de l'application, la version, une description et les études citées.
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// Cette page affiche des informations sur l'application, y compris le nom de l'application, la version, une description et les développeurs.
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 

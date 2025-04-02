@@ -22,6 +22,7 @@ class FavoritesScreen extends StatefulWidget {
 class _FavoritesScreenState extends State<FavoritesScreen> {
   List<Map<String, dynamic>> _quotes = [];
 
+  // Affiche une popup pour ajouter ou modifier une citation
   void _openAddQuotePopup({int? id, String? content, String? author}) {
     showDialog(
       context: context,

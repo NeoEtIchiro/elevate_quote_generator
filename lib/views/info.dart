@@ -1,3 +1,4 @@
+import 'package:elevate_quote_generator/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -46,36 +47,36 @@ class InfoScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               GestureDetector(
-                onTap: () => _launchURL('https://positivepsychology.com/motivational-quotes/'),
+                onTap: () => _launchURL(AppConstants.motivationalQuotesUrl),
                 child: Text(
                   localizations.infoStudy1,
                   style: const TextStyle(
                     fontSize: 16,
-                    color: Colors.blue,
+                    color: AppConstants.urlDecoration,
                     decoration: TextDecoration.underline,
                   ),
                 ),
               ),
               const SizedBox(height: 8),
               GestureDetector(
-                onTap: () => _launchURL('https://www.psychologytoday.com/us/blog/click-here-happiness/202001/40-inspirational-quotes-to-motivate-you'),
+                onTap: () => _launchURL(AppConstants.inspirationalQuotesUrl),
                 child: Text(
                   localizations.infoStudy2,
                   style: const TextStyle(
                     fontSize: 16,
-                    color: Colors.blue,
+                    color: AppConstants.urlDecoration,
                     decoration: TextDecoration.underline,
                   ),
                 ),
               ),
               const SizedBox(height: 8),
               GestureDetector(
-                onTap: () => _launchURL('https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6124950/'),
+                onTap: () => _launchURL(AppConstants.ncbiArticleUrl),
                 child: Text(
                   localizations.infoStudy3,
                   style: const TextStyle(
                     fontSize: 16,
-                    color: Colors.blue,
+                    color: AppConstants.urlDecoration,
                     decoration: TextDecoration.underline,
                   ),
                 ),

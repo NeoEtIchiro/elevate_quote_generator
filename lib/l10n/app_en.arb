@@ -26,5 +26,7 @@
   "saveQuote": "Save",
   "cancel": "Cancel",
   "quoteDeleted": "Quote deleted",
-  "quoteAdded": "Quote added"
+  "quoteAdded": "Quote added",
+
+  "landscapeModeMessage": "You are in landscape mode!"
 }

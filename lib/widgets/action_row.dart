@@ -1,3 +1,4 @@
+import 'package:elevate_quote_generator/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class ActionRow extends StatelessWidget {
@@ -22,9 +23,10 @@ class ActionRow extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               shape: const CircleBorder(),
               padding: const EdgeInsets.all(24.0),
+
             ),
             onPressed: onDislike,
-            child: const Icon(Icons.close, size: 36.0, color: Colors.red),
+            child: const Icon(Icons.close, size: 36.0, color: AppConstants.dislikeBtn),
           ),
         ),
         Expanded(
@@ -32,9 +34,10 @@ class ActionRow extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               shape: const CircleBorder(),
               padding: const EdgeInsets.all(24.0),
+
             ),
             onPressed: onFavorite,
-            child: const Icon(Icons.star, size: 36.0, color: Colors.yellow),
+            child: const Icon(Icons.star, size: 36.0, color: AppConstants.favoriteBtn),
           ),
         ),
         Expanded(
@@ -42,9 +45,10 @@ class ActionRow extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               shape: const CircleBorder(),
               padding: const EdgeInsets.all(24.0),
+
             ),
             onPressed: onLike,
-            child: const Icon(Icons.favorite, size: 36.0, color: Colors.green),
+            child: const Icon(Icons.favorite, size: 36.0, color: AppConstants.likeBtn),
           ),
         ),
       ],

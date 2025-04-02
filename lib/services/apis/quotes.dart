@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:elevate_quote_generator/services/apis/translate.dart';
+import 'package:elevate_quote_generator/utils/constants.dart';
 
 class QuotesService {
   Future<Map<String, String>> generateQuote() async {
     final httpClient = HttpClient()
       ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
 
-    final request = await httpClient.getUrl(Uri.parse('https://api.quotable.io/random?maxLength=130'));
+    final request = await httpClient.getUrl(Uri.parse('${AppConstants.apiBaseUrl}/random?maxLength=130'));
     final response = await request.close();
 
     if (response.statusCode == 200) {

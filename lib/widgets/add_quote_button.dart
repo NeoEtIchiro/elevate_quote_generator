@@ -1,3 +1,4 @@
+import 'package:elevate_quote_generator/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class AddQuoteButton extends StatelessWidget {
@@ -19,10 +20,12 @@ class AddQuoteButton extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
         ),
         onPressed: onPressed,
-        child: const Icon(
+        child: Icon(
           Icons.add,
           size: 44.0,
-          color: Colors.black,
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppConstants.addQuoteBtnIconColorDark
+              : AppConstants.addQuoteBtnIconColorLight,
         ),
       ),
     );

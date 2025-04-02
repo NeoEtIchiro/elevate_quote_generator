@@ -1,3 +1,4 @@
+import 'package:elevate_quote_generator/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -24,22 +25,22 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               localizations.version,
-              style: const TextStyle(fontSize: 16),
+              style: AppConstants.txtBase,
             ),
             const SizedBox(height: 16),
             Text(
               localizations.description,
-              style: const TextStyle(fontSize: 16),
+              style: AppConstants.txtBase,
             ),
             const SizedBox(height: 16),
             Text(
               localizations.developers,
-              style: const TextStyle(fontSize: 16),
+              style: AppConstants.txtBase,
             ),
             const SizedBox(height: 16),
             Text(
               localizations.license,
-              style: const TextStyle(fontSize: 16),
+              style: AppConstants.txtBase,
             ),
           ],
         ),

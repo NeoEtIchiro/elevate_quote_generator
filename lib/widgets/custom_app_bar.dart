@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onSettingsPressed;
   final ValueChanged<String> onMenuItemSelected;
@@ -13,7 +12,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.onSettingsPressed,
     required this.onMenuItemSelected,
     required this.title,
-    required this.style
+    required this.style,
   });
 
   @override
@@ -22,12 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         title,
-        style: TextStyle(
-          color: Theme.of(context).brightness == Brightness.dark
-              ? Colors.white
-              : Colors.black,
-        ).merge(style
-        ),
+        style: style,
       ),
       actions: [
         IconButton(

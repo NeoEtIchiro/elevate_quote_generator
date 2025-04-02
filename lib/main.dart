@@ -1,6 +1,7 @@
 import 'package:elevate_quote_generator/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:elevate_quote_generator/utils/theme.dart'; //
 
 void main() {
   runApp(const MainApp());
@@ -39,13 +40,9 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Elevate Quote Generator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        brightness: _isDarkMode ? Brightness.dark : Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-      ),
+      theme: AppThemes.lightTheme, // Utilisation du thème clair
+      darkTheme: AppThemes.darkTheme, // Utilisation du thème sombre
+      themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
       locale: _locale ?? const Locale('en'),
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,

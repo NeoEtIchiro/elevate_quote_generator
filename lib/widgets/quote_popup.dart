@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:elevate_quote_generator/services/data.dart';
+import 'package:elevate_quote_generator/models/quote.dart';
 
 class QuotePopup extends StatefulWidget {
   final Function onQuoteAdded;
-  final String? initialContent;
-  final String? initialAuthor;
-  final int? quoteId;
+  final Quote? initialQuote;
 
-  const QuotePopup({
+  const QuotePopup({super.key, 
     required this.onQuoteAdded,
-    this.initialContent,
-    this.initialAuthor,
-    this.quoteId,
+    this.initialQuote,
   });
 
   @override
@@ -26,8 +22,8 @@ class _QuotePopupState extends State<QuotePopup> {
   @override
   void initState() {
     super.initState();
-    _contentController = TextEditingController(text: widget.initialContent);
-    _authorController = TextEditingController(text: widget.initialAuthor);
+    _contentController = TextEditingController(text: widget.initialQuote?.contentEn ?? '');
+    _authorController = TextEditingController(text: widget.initialQuote?.author ?? '');
   }
 
   void _addOrUpdateQuote() async {
@@ -35,62 +31,45 @@ class _QuotePopupState extends State<QuotePopup> {
     final author = _authorController.text;
 
     if (content.isNotEmpty && author.isNotEmpty) {
-      if (widget.quoteId == null) {
-        await DatabaseHelper.instance.addQuote(content, content, author);
-      } else {
-        await DatabaseHelper.instance.updateQuote(widget.quoteId!, content, content, author);
-      }
-      widget.onQuoteAdded(); // Notify the parent widget to refresh the list
-      if (MediaQuery.of(context).orientation != Orientation.landscape) {
-        Navigator.pop(context);
-      }
-      _contentController.clear();
-      _authorController.clear();
+      final quote = Quote(
+        id: widget.initialQuote?.id,
+        contentEn: content,
+        contentFr: content, // Assuming same content for both languages
+        author: author,
+      );
+      widget.onQuoteAdded(quote);
+      Navigator.pop(context);
     }
-  }
-
-  void _discardChanges() {
-    _contentController.clear();
-    _authorController.clear();
-    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
 
     return AlertDialog(
       title: Text(
-        widget.quoteId == null
+        widget.initialQuote == null
             ? localizations!.addQuoteTitle
             : localizations!.editQuoteTitle,
-        style: TextStyle(
-          fontSize: 24.0, // Increase the font size
-          fontWeight: FontWeight.bold,
-        ),
       ),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _contentController,
-              decoration: InputDecoration(labelText: localizations.quote),
-            ),
-            TextField(
-              controller: _authorController,
-              decoration: InputDecoration(labelText: localizations.author),
-            ),
-          ],
-        ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: _contentController,
+            decoration: InputDecoration(labelText: localizations.quote),
+          ),
+          TextField(
+            controller: _authorController,
+            decoration: InputDecoration(labelText: localizations.author),
+          ),
+        ],
       ),
       actions: [
-        if (!isLandscape) // Affiche le bouton "Cancel" uniquement en mode portrait
-          ElevatedButton(
-            onPressed: _discardChanges,
-            child: Text(localizations.cancel),
-          ),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(localizations.cancel),
+        ),
         ElevatedButton(
           onPressed: _addOrUpdateQuote,
           child: Text(localizations.saveQuote),

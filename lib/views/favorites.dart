@@ -1,6 +1,7 @@
+import 'package:elevate_quote_generator/models/quote.dart';
+import 'package:elevate_quote_generator/providers/quote_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:elevate_quote_generator/services/data.dart';
 import 'package:elevate_quote_generator/widgets/quote_popup.dart';
 import 'package:elevate_quote_generator/widgets/quote_list.dart';
 import 'package:elevate_quote_generator/widgets/add_quote_button.dart';
@@ -10,31 +11,17 @@ class FavoritesScreen extends StatefulWidget {
   final Locale? locale;
 
   const FavoritesScreen({
-    Key? key,
+    super.key,
     required this.isDarkMode,
     required this.locale,
-  }) : super(key: key);
+  });
 
   @override
   _FavoritesScreenState createState() => _FavoritesScreenState();
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
-  List<Map<String, dynamic>> _quotes = [];
-
-  // Affiche une popup pour ajouter ou modifier une citation
-  void _openAddQuotePopup({int? id, String? content, String? author}) {
-    showDialog(
-      context: context,
-      builder: (context) =>
-          QuotePopup(
-            onQuoteAdded: _fetchQuotes,
-            initialContent: content,
-            initialAuthor: author,
-            quoteId: id,
-          ),
-    );
-  }
+  final QuoteProvider _quoteProvider = QuoteProvider();
 
   @override
   void initState() {
@@ -43,71 +30,54 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   }
 
   Future<void> _fetchQuotes() async {
-    final quotes = await DatabaseHelper.instance.getAllQuotes();
-    setState(() {
-      _quotes = List.from(quotes);
-    });
+    await _quoteProvider.fetchQuotes();
+    setState(() {});
   }
 
   void _deleteQuote(int index) {
-    setState(() {
-      _quotes.removeAt(index);
-    });
+    final quote = _quoteProvider.quotes[index];
+    _quoteProvider.deleteQuote(quote.id!);
   }
 
-  void _editQuote(int id, String content, String author) {
-    _openAddQuotePopup(id: id, content: content, author: author);
+  void _editQuote(Quote quote) {
+    _openAddQuotePopup(quote);
+  }
+
+  void _openAddQuotePopup(Quote? quote) {
+    showDialog(
+      context: context,
+      builder: (context) => QuotePopup(
+        onQuoteAdded: (updatedQuote) async {
+          if (updatedQuote.id == null) {
+            await _quoteProvider.addQuote(updatedQuote);
+          } else {
+            await _quoteProvider.updateQuote(updatedQuote);
+          }
+          _fetchQuotes();
+        },
+        initialQuote: quote,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    final locale = widget.locale ?? const Locale('en'); // Provide a default locale
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final locale = widget.locale ?? const Locale('en');
 
     return Scaffold(
       appBar: AppBar(title: Text(localizations!.favorites)),
-      body: isLandscape
-          ? Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: _quotes.isEmpty
-                      ? Center(child: Text(localizations.noFavorites))
-                      : QuoteList(
-                          quotes: _quotes,
-                          locale: locale,
-                          onDelete: _deleteQuote,
-                          onEdit: _editQuote,
-                        ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: QuotePopup(
-                      onQuoteAdded: _fetchQuotes,
-                      // Pas de bouton "Cancel" en mode paysage
-                      initialContent: null,
-                      initialAuthor: null,
-                      quoteId: null,
-                    ),
-                  ),
-                ),
-              ],
-            )
-          : _quotes.isEmpty
-              ? Center(child: Text(localizations.noFavorites))
-              : QuoteList(
-                  quotes: _quotes,
-                  locale: locale,
-                  onDelete: _deleteQuote,
-                  onEdit: _editQuote,
-                ),
-      floatingActionButton: isLandscape
-          ? null // Pas de FloatingActionButton en mode paysage
-          : AddQuoteButton(
-              onPressed: _openAddQuotePopup,
+      body: _quoteProvider.quotes.isEmpty
+          ? Center(child: Text(localizations.noFavorites))
+          : QuoteList(
+              quotes: _quoteProvider.quotes,
+              locale: locale,
+              onDelete: _deleteQuote,
+              onEdit: _editQuote,
             ),
+      floatingActionButton: AddQuoteButton(
+        onPressed: () => _openAddQuotePopup(null),
+      ),
     );
   }
 }

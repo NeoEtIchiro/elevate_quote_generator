@@ -23,9 +23,7 @@ class AddQuoteButton extends StatelessWidget {
         child: Icon(
           Icons.add,
           size: 44.0,
-          color: Theme.of(context).brightness == Brightness.dark
-              ? AppConstants.addQuoteBtnIconColorDark
-              : AppConstants.addQuoteBtnIconColorLight,
+          color:AppConstants.addQuoteBtnIconColorLight,
         ),
       ),
     );

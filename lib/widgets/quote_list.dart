@@ -1,21 +1,21 @@
+import 'package:elevate_quote_generator/models/quote.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:elevate_quote_generator/services/data.dart';
 import 'favorite_quote_card.dart';
 
 class QuoteList extends StatelessWidget {
-  final List<Map<String, dynamic>> quotes;
+  final List<Quote> quotes;
   final Locale locale;
   final Function(int) onDelete;
-  final Function(int, String, String) onEdit;
+  final Function(Quote) onEdit;
 
   const QuoteList({
-    Key? key,
+    super.key,
     required this.quotes,
     required this.locale,
     required this.onDelete,
     required this.onEdit,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +26,9 @@ class QuoteList extends StatelessWidget {
       itemBuilder: (context, index) {
         final quote = quotes[index];
         return Dismissible(
-          key: Key(quote['id'].toString()),
+          key: Key(quote.id.toString()),
           direction: DismissDirection.endToStart,
-          onDismissed: (direction) async {
-            await DatabaseHelper.instance.deleteQuote(quote['id']);
+          onDismissed: (direction) {
             onDelete(index);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(localizations!.quoteDeleted)),
@@ -42,14 +41,10 @@ class QuoteList extends StatelessWidget {
             child: const Icon(Icons.delete, color: Colors.white),
           ),
           child: GestureDetector(
-            onTap: () => onEdit(
-              quote['id'],
-              locale == const Locale('fr') ? (quote['content_fr'] ?? '') : (quote['content_en'] ?? ''),
-              quote['author'] ?? '',
-            ),
+            onTap: () => onEdit(quote),
             child: QuoteCard(
-              content: locale == const Locale('fr') ? (quote['content_fr'] ?? '') : (quote['content_en'] ?? ''),
-              author: quote['author'] ?? '',
+              content: locale == const Locale('fr') ? quote.contentFr : quote.contentEn,
+              author: quote.author,
               locale: locale,
             ),
           ),

@@ -15,6 +15,5 @@ class AppConstants {
   static const TextStyle txtBase = TextStyle(
     fontSize: 16,
   );
-  static const Color addQuoteBtnIconColorDark = Colors.white;
   static const Color addQuoteBtnIconColorLight = Colors.white; 
 }
